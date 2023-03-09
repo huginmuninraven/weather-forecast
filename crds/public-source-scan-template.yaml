@@ -1,0 +1,216 @@
+apiVersion: scanning.apps.tanzu.vmware.com/v1beta1
+kind: ScanTemplate
+metadata:
+  annotations:
+    kapp.k14s.io/identity: v1;aaa/scanning.apps.tanzu.vmware.com/ScanTemplate/public-source-scan-template;scanning.apps.tanzu.vmware.com/v1beta1
+    kapp.k14s.io/original: '{"apiVersion":"scanning.apps.tanzu.vmware.com/v1beta1","kind":"ScanTemplate","metadata":{"annotations":{"kbld.k14s.io/images":"-
+      origins:\n  - preresolved:\n      url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249\n  url:
+      harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249\n-
+      origins:\n  - preresolved:\n      url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:9f0628760d11b2f88d5760df7bacd3ea60bf1436ef6f9b9f7b57fbe2c12efdec\n  url:
+      harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:9f0628760d11b2f88d5760df7bacd3ea60bf1436ef6f9b9f7b57fbe2c12efdec\n-
+      origins:\n  - preresolved:\n      url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:b19f874235bbfd8beac288009c6fba54f6f75e955a597b916d2b7a2ce3381937\n  url:
+      harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:b19f874235bbfd8beac288009c6fba54f6f75e955a597b916d2b7a2ce3381937\n-
+      origins:\n  - preresolved:\n      url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:be8dc27b142e6a2478a4716b821ce6d554fc5275426cda0417b6be0564a9c0da\n  url:
+      harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:be8dc27b142e6a2478a4716b821ce6d554fc5275426cda0417b6be0564a9c0da\n"},"labels":{"kapp.k14s.io/app":"1677873183704385302","kapp.k14s.io/association":"v1.3eb10a7893203d1f8f38512e23d0438a"},"name":"public-source-scan-template","namespace":"aaa"},"spec":{"template":{"containers":[{"args":["process","-f","/workspace"],"command":["/aggregator"],"image":"harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:9f0628760d11b2f88d5760df7bacd3ea60bf1436ef6f9b9f7b57fbe2c12efdec","imagePullPolicy":"IfNotPresent","name":"summary","volumeMounts":[{"mountPath":"/workspace","name":"workspace","readOnly":true}]}],"imagePullSecrets":[{"name":"scanner-secret-ref"}],"initContainers":[{"args":["-c","echo
+      \"$CA_CERT\" \u003e /ca-cert-secret/ca_cert.crt"],"command":["/bin/bash"],"image":"harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249","imagePullPolicy":"IfNotPresent","name":"ca-cert","volumeMounts":[{"mountPath":"/ca-cert-secret","name":"ca-cert-secret"}]},{"args":["-c","mkdir
+      /workspace/source"],"command":["/bin/bash"],"image":"harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249","imagePullPolicy":"IfNotPresent","name":"initialize-scanner-workspace","volumeMounts":[{"mountPath":"/workspace","name":"workspace","readOnly":false}]},{"args":["-c","./source/clone-repo.sh
+      /workspace/source/repo $(REPOSITORY)"],"command":["/bin/bash"],"image":"harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249","imagePullPolicy":"IfNotPresent","name":"repo","volumeMounts":[{"mountPath":"/workspace","name":"workspace","readOnly":false}]},{"args":["-c","./source/scan-source.sh
+      /workspace/source/scan.xml /workspace/source/out.yaml /workspace/source/repo
+      git"],"command":["/bin/bash"],"env":[{"name":"XDG_CACHE_HOME","value":"/.cache"},{"name":"SSL_CERT_DIR","value":"/etc/pki/tls/certs:/ca-cert-secret"}],"image":"harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249","imagePullPolicy":"IfNotPresent","name":"scan-plugin","resources":{"limits":{"cpu":"1000m"},"requests":{"cpu":"250m","memory":"128Mi"}},"volumeMounts":[{"mountPath":"/workspace","name":"workspace","readOnly":false},{"mountPath":"/.cache","name":"cache","readOnly":false},{"mountPath":"/ca-cert-secret","name":"ca-cert-secret","readOnly":true}]},{"args":["-c","set
+      -euo pipefail\nif [[ -z ${METADATA_STORE_ACCESS_TOKEN:-\"\"} ]]\nthen\n  METADATA_STORE_ACCESS_TOKEN=$(cat
+      /var/run/secrets/kubernetes.io/serviceaccount/token)\nfi\n/insight config set-target
+      $METADATA_STORE_URL --ca-cert /metadata-store/ca.crt --access-token $METADATA_STORE_ACCESS_TOKEN\n"],"command":["bash"],"env":[{"name":"METADATA_STORE_URL","value":"https://metadata-store-app.metadata-store.svc.cluster.local:8443"}],"image":"harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:be8dc27b142e6a2478a4716b821ce6d554fc5275426cda0417b6be0564a9c0da","imagePullPolicy":"IfNotPresent","name":"metadata-store-plugin-config","volumeMounts":[{"mountPath":"/workspace","name":"workspace","readOnly":false},{"mountPath":"/.config","name":"insight-config","readOnly":false},{"mountPath":"/metadata-store","name":"metadata-store-ca-cert","readOnly":true}]},{"args":["source","add","--cyclonedxtype","xml","--path","/workspace/source/scan.xml"],"command":["/send-scan-results.sh"],"image":"harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:be8dc27b142e6a2478a4716b821ce6d554fc5275426cda0417b6be0564a9c0da","imagePullPolicy":"IfNotPresent","name":"metadata-store-plugin","volumeMounts":[{"mountPath":"/workspace","name":"workspace","readOnly":false},{"mountPath":"/.config","name":"insight-config","readOnly":false}]},{"args":["check","--policy","$(POLICY)","--scan-results","/workspace/source/scan.xml","--parser","xml","--format","yaml","--output","/workspace/compliance-plugin/out.yaml"],"command":["/compliance"],"image":"harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:b19f874235bbfd8beac288009c6fba54f6f75e955a597b916d2b7a2ce3381937","imagePullPolicy":"IfNotPresent","name":"compliance-plugin","volumeMounts":[{"mountPath":"/workspace","name":"workspace","readOnly":false}]}],"restartPolicy":"Never","securityContext":{"runAsNonRoot":true},"serviceAccountName":"grype-scanner","volumes":[{"emptyDir":{},"name":"workspace"},{"emptyDir":{},"name":"insight-config"},{"emptyDir":{},"name":"cache"},{"emptyDir":{},"name":"ca-cert-secret"},{"name":"metadata-store-ca-cert","secret":{"secretName":"app-tls-cert"}}]}}}'
+    kapp.k14s.io/original-diff-md5: 58e0494c51d30eb3494f7c9198986bb9
+    kbld.k14s.io/images: |
+      - origins:
+        - preresolved:
+            url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249
+        url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249
+      - origins:
+        - preresolved:
+            url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:9f0628760d11b2f88d5760df7bacd3ea60bf1436ef6f9b9f7b57fbe2c12efdec
+        url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:9f0628760d11b2f88d5760df7bacd3ea60bf1436ef6f9b9f7b57fbe2c12efdec
+      - origins:
+        - preresolved:
+            url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:b19f874235bbfd8beac288009c6fba54f6f75e955a597b916d2b7a2ce3381937
+        url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:b19f874235bbfd8beac288009c6fba54f6f75e955a597b916d2b7a2ce3381937
+      - origins:
+        - preresolved:
+            url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:be8dc27b142e6a2478a4716b821ce6d554fc5275426cda0417b6be0564a9c0da
+        url: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:be8dc27b142e6a2478a4716b821ce6d554fc5275426cda0417b6be0564a9c0da
+  creationTimestamp: "2023-03-03T19:53:07Z"
+  generation: 3
+  labels:
+    kapp.k14s.io/app: "1677873183704385302"
+    kapp.k14s.io/association: v1.3eb10a7893203d1f8f38512e23d0438a
+  name: public-source-scan-template
+  namespace: aaa
+  resourceVersion: "285586389"
+  uid: b1f7627a-2485-4519-8f48-a6c0d102163d
+spec:
+  template:
+    containers:
+    - args:
+      - process
+      - -f
+      - /workspace
+      command:
+      - /aggregator
+      image: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:9f0628760d11b2f88d5760df7bacd3ea60bf1436ef6f9b9f7b57fbe2c12efdec
+      imagePullPolicy: IfNotPresent
+      name: summary
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: true
+    imagePullSecrets:
+    - name: scanner-secret-ref
+    initContainers:
+    - args:
+      - -c
+      - echo "$CA_CERT" > /ca-cert-secret/ca_cert.crt
+      command:
+      - /bin/bash
+      image: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249
+      imagePullPolicy: IfNotPresent
+      name: ca-cert
+      volumeMounts:
+      - mountPath: /ca-cert-secret
+        name: ca-cert-secret
+    - args:
+      - -c
+      - mkdir /workspace/source
+      command:
+      - /bin/bash
+      image: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249
+      imagePullPolicy: IfNotPresent
+      name: initialize-scanner-workspace
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+    - args:
+      - -c
+      - ./source/clone-repo.sh /workspace/source/repo $(REPOSITORY)
+      command:
+      - /bin/bash
+      image: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249
+      imagePullPolicy: IfNotPresent
+      name: repo
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+    - args:
+      - -c
+      - ./source/scan-source.sh /workspace/source/scan.xml /workspace/source/out.yaml
+        /workspace/source/repo git
+      command:
+      - /bin/bash
+      env:
+      - name: XDG_CACHE_HOME
+        value: /.cache
+      - name: SSL_CERT_DIR
+        value: /etc/pki/tls/certs:/ca-cert-secret
+      image: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:30294bc1619afb5a1bc2f156976c609be0a76b45fffd4e4958ecb35d2784c249
+      imagePullPolicy: IfNotPresent
+      name: scan-plugin
+      resources:
+        limits:
+          cpu: 1000m
+        requests:
+          cpu: 250m
+          memory: 128Mi
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+      - mountPath: /.cache
+        name: cache
+        readOnly: false
+      - mountPath: /ca-cert-secret
+        name: ca-cert-secret
+        readOnly: true
+    - args:
+      - -c
+      - |
+        set -euo pipefail
+        if [[ -z ${METADATA_STORE_ACCESS_TOKEN:-""} ]]
+        then
+          METADATA_STORE_ACCESS_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+        fi
+        /insight config set-target $METADATA_STORE_URL --ca-cert /metadata-store/ca.crt --access-token $METADATA_STORE_ACCESS_TOKEN
+      command:
+      - bash
+      env:
+      - name: METADATA_STORE_URL
+        value: https://metadata-store-app.metadata-store.svc.cluster.local:8443
+      image: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:be8dc27b142e6a2478a4716b821ce6d554fc5275426cda0417b6be0564a9c0da
+      imagePullPolicy: IfNotPresent
+      name: metadata-store-plugin-config
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+      - mountPath: /.config
+        name: insight-config
+        readOnly: false
+      - mountPath: /metadata-store
+        name: metadata-store-ca-cert
+        readOnly: true
+    - args:
+      - source
+      - add
+      - --cyclonedxtype
+      - xml
+      - --path
+      - /workspace/source/scan.xml
+      command:
+      - /send-scan-results.sh
+      image: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:be8dc27b142e6a2478a4716b821ce6d554fc5275426cda0417b6be0564a9c0da
+      imagePullPolicy: IfNotPresent
+      name: metadata-store-plugin
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+      - mountPath: /.config
+        name: insight-config
+        readOnly: false
+    - args:
+      - check
+      - --policy
+      - $(POLICY)
+      - --scan-results
+      - /workspace/source/scan.xml
+      - --parser
+      - xml
+      - --format
+      - yaml
+      - --output
+      - /workspace/compliance-plugin/out.yaml
+      command:
+      - /compliance
+      image: harbor.h2o-2-1546.h2o.vmware.com/tap/tap-packages@sha256:b19f874235bbfd8beac288009c6fba54f6f75e955a597b916d2b7a2ce3381937
+      imagePullPolicy: IfNotPresent
+      name: compliance-plugin
+      volumeMounts:
+      - mountPath: /workspace
+        name: workspace
+        readOnly: false
+    restartPolicy: Never
+    securityContext:
+      runAsNonRoot: true
+    serviceAccountName: grype-scanner
+    volumes:
+    - emptyDir: {}
+      name: workspace
+    - emptyDir: {}
+      name: insight-config
+    - emptyDir: {}
+      name: cache
+    - emptyDir: {}
+      name: ca-cert-secret
+    - name: metadata-store-ca-cert
+      secret:
+        secretName: app-tls-cert
