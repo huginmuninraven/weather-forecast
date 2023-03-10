@@ -1,13 +1,6 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  annotations:
-    kapp.k14s.io/identity: v1;aaa//ServiceAccount/trivy-scanner;v1
-    kapp.k14s.io/original: '{"apiVersion":"v1","kind":"ServiceAccount","metadata":{"labels":{"kapp.k14s.io/app":"1677873188503735646","kapp.k14s.io/association":"v1.7e2550594e2182bd62d2266cb34b952f"},"name":"trivy-scanner","namespace":"aaa"},"secrets":[{"name":"registry-credentials"},{"name":"app-tls-cert"},{"name":"metadata-store-token"}]}'
-    kapp.k14s.io/original-diff-md5: c6e94dc94aed3401b5d0f26ed6c0bff3
-  labels:
-    kapp.k14s.io/app: "1677873188503735646"
-    kapp.k14s.io/association: v1.7e2550594e2182bd62d2266cb34b952f
   name: trivy-scanner
   namespace: weather-forecast 
 secrets:
