@@ -32,9 +32,9 @@ tanzu apps workload apply -f config/workload.yaml
 If you would like deploy the code from your local working directory you can use the following command:
 
 ```
-tanzu apps workload create weatherforecast-csharp -f config/workload.yaml \
+tanzu apps workload create weatherforecast -f config/workload.yaml \
   --local-path . \
-  --source-image <REPOSITORY-PREFIX>/weatherforecast-csharp-source \
+  --source-image <REPOSITORY-PREFIX>/weatherforecast-source \
   --type web
 ```
 
@@ -43,7 +43,7 @@ tanzu apps workload create weatherforecast-csharp -f config/workload.yaml \
 Determine the URL to use for the accessing the app by running:
 
 ```
-tanzu apps workload get weatherforecast-csharp
+tanzu apps workload get weatherforecast
 ```
 
 To access the deployed app use the URL shown under "Workload Knative Services" and append the endpoint `/weatherforecast` to that URL.

@@ -3,8 +3,8 @@
 ## Options
 ```json
 {
-  "applicationName" : "weather-forecast",
-  "projectName" : "weatherforecast-csharp"
+  "applicationName" : "Sample",
+  "projectName" : "weatherforecast"
 }
 ```
 ## Log
@@ -56,7 +56,7 @@
 ┃ ┃ ┃ ┃ ┃ ┃ Debug config/workload.yaml matched [README.md, Sample.csproj, config/**, catalog/**] -> excluded
 ┃ ┃ ┃ ┃ ┃ ┗ Debug global.json didn't match [README.md, Sample.csproj, config/**, catalog/**] -> included
 ┃ ┃ ┃ ┃ ┃ ┏ engine.transformations[0].validated.delegate.transformations[0].sources[0].delegate.transformations[2] (ReplaceText)
-┃ ┃ ┃ ┃ ┗ ┗  Info Will replace [Sample->weather-forecast]
+┃ ┃ ┃ ┃ ┗ ┗  Info Will replace [Sample->Sample]
 ┃ ┃ ┃ ┃ ┏ engine.transformations[0].validated.delegate.transformations[0].sources[1] (Combo)
 ┃ ┃ ┃ ┃ ┃  Info Combo running as Chain
 ┃ ┃ ┃ ┃ ┃ engine.transformations[0].validated.delegate.transformations[0].sources[1].delegate (Chain)
@@ -79,7 +79,7 @@
 ┃ ┃ ┃ ┃ ┃ ┃ Debug config/workload.yaml didn't match [Sample.csproj] -> excluded
 ┃ ┃ ┃ ┃ ┃ ┗ Debug global.json didn't match [Sample.csproj] -> excluded
 ┃ ┃ ┃ ┃ ┃ ┏ engine.transformations[0].validated.delegate.transformations[0].sources[1].delegate.transformations[1] (RewritePath)
-┃ ┃ ┃ ┃ ┗ ┗ Debug Path 'Sample.csproj' matched '^(?<folder>.*/)?(?<filename>([^/]+?|)(?=(?<ext>\.[^/.]*)?)$)' with groups {ext=.csproj, folder=null, filename=Sample.csproj, g0=Sample.csproj, g1=null, g2=Sample.csproj, g3=Sample.csproj, g4=.csproj} and was rewritten to 'weather-forecast.csproj'
+┃ ┃ ┃ ┃ ┗ ┗ Debug Path 'Sample.csproj' matched '^(?<folder>.*/)?(?<filename>([^/]+?|)(?=(?<ext>\.[^/.]*)?)$)' with groups {ext=.csproj, folder=null, filename=Sample.csproj, g0=Sample.csproj, g1=null, g2=Sample.csproj, g3=Sample.csproj, g4=.csproj} and was rewritten to 'Sample.csproj'
 ┃ ┃ ┃ ┃ ┏ engine.transformations[0].validated.delegate.transformations[0].sources[2] (Combo)
 ┃ ┃ ┃ ┃ ┃  Info Combo running as Chain
 ┃ ┃ ┃ ┃ ┃ engine.transformations[0].validated.delegate.transformations[0].sources[2].delegate (Chain)
@@ -102,7 +102,7 @@
 ┃ ┃ ┃ ┃ ┃ ┃ Debug config/workload.yaml matched [README.md, config/*.yaml, catalog/*.yaml] -> included
 ┃ ┃ ┃ ┃ ┃ ┗ Debug global.json didn't match [README.md, config/*.yaml, catalog/*.yaml] -> excluded
 ┃ ┃ ┃ ┃ ┃ ┏ engine.transformations[0].validated.delegate.transformations[0].sources[2].delegate.transformations[1] (ReplaceText)
-┃ ┃ ┃ ┃ ┃ ┗  Info Will replace [sample-app->weatherforecast-csha...(truncated)]
+┃ ┃ ┃ ┃ ┃ ┗  Info Will replace [sample-app->weatherforecast]
 ┃ ┃ ┃ ┃ ┃ ┏ engine.transformations[0].validated.delegate.transformations[0].sources[2].delegate.transformations[2] (Combo)
 ┃ ┃ ┃ ┃ ┃ ┃  Info Combo running as Chain
 ┃ ┃ ┃ ┃ ┃ ┃ engine.transformations[0].validated.delegate.transformations[0].sources[2].delegate.transformations[2].delegate (Chain)

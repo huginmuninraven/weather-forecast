@@ -8,4 +8,3 @@ secrets:
 - name: app-tls-cert
 - name: metadata-store-token
 - name: trivy-scanner-token-f7rjg
-

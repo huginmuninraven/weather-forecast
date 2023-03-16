@@ -1,9 +1,9 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: weatherforecast-csharp
+  name: weatherforecast
   annotations:
-    "backstage.io/kubernetes-label-selector": "app.kubernetes.io/part-of=weatherforecast-csharp"
+    "backstage.io/kubernetes-label-selector": "app.kubernetes.io/part-of=weatherforecast"
 spec:
   type: service
   lifecycle: experimental
